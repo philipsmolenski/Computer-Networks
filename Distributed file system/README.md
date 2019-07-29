@@ -1,9 +1,9 @@
-#Distrubuted file system
+# Distrubuted file system
 
-##Description
+## Description
 The aplication can be used to store files in multiple server nodes. Clients can serach, change content or remove files.
 
-##How to compile and run
+## How to compile and run
 To generate executable files type:
 
 ```sh
@@ -38,7 +38,7 @@ CMD_PORT is the UDP port used to send and receive commands from server
 OUT_FLDR is the path to a folder in which files downloaded from server are saved
 TIMEOUT is the time in seconds during which the clinet is waiting for server nodes to answer after a query has been send
 
-##How to use
+## How to use
 Each of client nodes provides the following operations through the command line:
 
 discover - find and print all available server nodes
@@ -52,7 +52,7 @@ remove %s - remove file named %s from each of server nodes
 exit - finish working
 
 
-##Possible improvements
+## Possible improvements
 The text below (in Polish) describes an idea to improve the program in such a way that each file is stored in only one server node (i.e. clients cannot upload the same file to two different server nodes)
 
 Rozwiązanie części C zadania 2. opierać się będzie o algorytmy znane z wykładów programowania współbieżnego: algrotym Ricarta-Agrawali oraz algorytm Lamporta synchronizacji zegarów logicznych. Każdy węzeł serwerowy będzie przechowywał:

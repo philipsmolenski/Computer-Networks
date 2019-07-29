@@ -1,5 +1,59 @@
-Zadanie 2. część C
-Philip Smolenski-Jensen
+#Distrubuted file system
+
+##Description
+The aplication can be used to store files in multiple server nodes. Clients can serach, change content or remove files.
+
+##How to compile and run
+To generate executable files type:
+
+```sh
+make
+```
+
+To run server node type:
+
+```sh
+./netstore-server -g MCAST_ADDR -p CMD_PORT -b MAX_SPACE -f SHRD_FLDR -t TIMEOUT
+
+```
+where:
+
+MCAST_ADDR is the multicast address of the server node
+CMD_PORT is the UDP port used to send and receive commands from client
+MAX_SPACE is the maximal space provided by this node in bytes, default value is 52428800
+SHRD_FLDR is a path to a folder in which files will be stored by this node
+TIMEOUT is the time in seconds during which the server is waiting for client nodes to answer after a query has been send.
+
+To run client node type:
+
+```sh
+./netstore-client -g MCAST_ADDR -p CMD_PORT -o OUT_FLDR -t TIMEOUT
+
+```
+
+where:
+
+MCAST_ADDR is the multicast address of the client node
+CMD_PORT is the UDP port used to send and receive commands from server
+OUT_FLDR is the path to a folder in which files downloaded from server are saved
+TIMEOUT is the time in seconds during which the clinet is waiting for server nodes to answer after a query has been send
+
+##How to use
+Each of client nodes provides the following operations through the command line:
+
+discover - find and print all available server nodes
+
+search %s - search for files that contain the sequence %s in their names (works also if %s is the empty string and finds all available files)
+
+fetch %s - download file named %s
+
+remove %s - remove file named %s from each of server nodes
+
+exit - finish working
+
+
+##Possible improvements
+The text below (in Polish) describes an idea to improve the program in such a way that each file is stored in only one server node (i.e. clients cannot upload the same file to two different server nodes)
 
 Rozwiązanie części C zadania 2. opierać się będzie o algorytmy znane z wykładów programowania współbieżnego: algrotym Ricarta-Agrawali oraz algorytm Lamporta synchronizacji zegarów logicznych. Każdy węzeł serwerowy będzie przechowywał:
 

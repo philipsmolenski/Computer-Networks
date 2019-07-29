@@ -132,13 +132,14 @@ int main(int argc, const char *argv[]) {
       polls[0].revents = 0;
       string line;
       getline(cin, line);
-      transform(line.begin(), line.end(), line.begin(), ::tolower);
+      string line_lowercase = line;
+      transform(line_lowercase.begin(), line_lowercase.end(), line_lowercase.begin(), ::tolower);
       size_t space = line.find(' ');
 
-      if (space == string::npos && line != "discover" && line != "search" && line != "exit") 
+      if (space == string::npos && line_lowercase != "discover" && line_lowercase != "search" && line_lowercase != "exit") 
         continue;
 
-      else if (line == "discover") {
+      else if (line_lowercase == "discover") {
         m = init_smpl_message("HELLO", &cmd_seq, "");
         convert_message(buff, m);
         
@@ -151,7 +152,7 @@ int main(int argc, const char *argv[]) {
         start_timer (beg, polls);
       }
 
-      else if (line == "exit") {
+      else if (line_lowercase == "exit") {
         for (size_t i = 1; i < polls.size(); i++)
           if ((close(polls[i].fd) < 0))
             syserr("close");
@@ -164,7 +165,7 @@ int main(int argc, const char *argv[]) {
       }
 
       else {
-        string query = line.substr(0, space);
+        string query = line_lowercase.substr(0, space);
         string subname = "";
 
         if (query == "search") {
@@ -236,17 +237,17 @@ int main(int argc, const char *argv[]) {
                 upload_candidates[file_name].pop_back();
               }
               else
-                print_error_no_address(file_name, "uploading", 
+                print_error_no_address(subname, "uploading", 
                   "No servers found. Please type 'discover' to find servers.");
             }
             
             else
-              print_error_no_address(file_name, "uploading", 
+              print_error_no_address(subname, "uploading", 
                   "File is already uploading.");
           }
 
           else 
-            cout << "File " << file_name << " does not exist" << endl;
+            cout << "File " << subname << " does not exist" << endl;
         }
 
         else if (query == "remove") {
@@ -360,7 +361,7 @@ int main(int argc, const char *argv[]) {
           log_helper.insert(make_pair(poll.fd, make_pair(file_name, server_address)));
 
           if (f == NULL) {
-            print_error_log(log_helper, poll.fd, "uploading", "unalble to open file");
+            print_error_log(log_helper, poll.fd, "uploading", "unable to open file");
             log_helper.erase(poll.fd);
             continue;
           }
